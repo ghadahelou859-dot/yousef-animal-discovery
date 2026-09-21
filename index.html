@@ -10,17 +10,27 @@
 <body>
   <main id="app">
     <section id="welcome" class="screen active image-screen" aria-label="Welcome">
-      <picture class="full-art"><source media="(max-width:700px)" srcset="welcome-mobile.png"><img src="welcome-desktop.png" alt="Yousef's animal discovery welcome page"></picture>
-      <button id="startBtn" class="hotspot welcome-hotspot" type="button" aria-label="Start exploring"><span class="sr-only">Start exploring</span></button>
+      <picture class="full-art">
+        <source media="(max-width:700px)" srcset="animal-world-welcome-mobile.png">
+        <img src="animal-world-welcome-desktop.png" alt="The Animal World — Let's Explore">
+      </picture>
+      <button id="startBtn" class="hotspot welcome-hotspot" type="button" aria-label="Start the adventure">
+        <span class="sr-only">Start the adventure</span>
+      </button>
     </section>
 
     <section id="videoScreen" class="screen video-screen" aria-label="Welcome video">
-      <video id="welcomeVideo" playsinline preload="metadata" controls><source src="welcome.mp4" type="video/mp4"></video>
-      <button id="skipVideo" class="floating-control" type="button">Go to map</button>
+      <video id="welcomeVideo" playsinline preload="metadata" controls>
+        <source src="welcome.mp4" type="video/mp4">
+      </video>
+      <p id="videoMessage" class="video-message" aria-live="polite"></p>
     </section>
 
     <section id="mapScreen" class="screen image-screen" aria-label="Animal Adventure Map">
-      <picture class="full-art map-art"><source media="(max-width:700px)" srcset="adventure-map-desktop.png"><img src="adventure-map-desktop.png" alt="Animal Adventure Map"></picture>
+      <picture class="full-art map-art">
+        <source media="(max-width:700px)" srcset="adventure-map-desktop.png">
+        <img src="adventure-map-desktop.png" alt="Animal Adventure Map">
+      </picture>
       <button class="hotspot map-node map-1" data-lesson="0" type="button" aria-label="Open lesson 1"></button>
       <button class="hotspot map-node map-2" data-lesson="1" type="button" aria-label="Open lesson 2"></button>
       <button class="hotspot map-node map-3" data-lesson="2" type="button" aria-label="Open lesson 3"></button>
@@ -31,29 +41,59 @@
     </section>
 
     <section id="lessonScreen" class="screen image-screen" aria-label="Lesson">
-      <picture class="full-art"><source id="lessonMobileSource" media="(max-width:700px)" srcset="lesson-01-mobile.jpg"><img id="lessonImage" src="lesson-01-desktop.png" alt="Animal lesson"></picture>
+      <picture class="full-art lesson-art">
+        <source id="lessonMobileSource" media="(max-width:700px)" srcset="lesson-01-mobile.jpg">
+        <img id="lessonImage" src="lesson-01-desktop.png" alt="Animal lesson">
+      </picture>
       <button class="round-control back-control go-map" type="button" aria-label="Back to map"><img src="back-arrow.png" alt=""></button>
       <button id="playLessonAudio" class="round-control audio-control" type="button" aria-label="Play lesson audio"><img src="speaker.png" alt=""></button>
-      <nav class="lesson-nav" aria-label="Lesson navigation"><button id="previousLesson" type="button">Previous</button><button id="nextLesson" type="button">Next</button></nav>
+      <nav class="lesson-nav" aria-label="Lesson navigation">
+        <button id="previousLesson" type="button">Previous</button>
+        <button id="nextLesson" type="button">Next</button>
+      </nav>
       <audio id="lessonAudio" preload="metadata"></audio>
     </section>
 
     <section id="quizScreen" class="screen image-screen quiz-screen" aria-labelledby="questionText">
-      <picture class="full-art"><source media="(max-width:700px)" srcset="quiz-background-mobile.png"><img src="quiz-background-desktop.png" alt=""></picture>
+      <picture class="full-art">
+        <source media="(max-width:700px)" srcset="quiz-background-mobile.png">
+        <img src="quiz-background-desktop.png" alt="">
+      </picture>
       <button class="round-control back-control go-map" type="button" aria-label="Back to map"><img src="back-arrow.png" alt=""></button>
       <div class="quiz-panel">
-        <div class="quiz-topline"><span id="questionCount">Question 1 of 10</span><span class="timer"><span id="timerValue">10</span>s</span></div>
+        <div class="quiz-topline">
+          <span id="questionCount">Question 1 of 10</span>
+          <span class="timer"><span id="timerValue">10</span>s</span>
+        </div>
         <div class="progress"><span id="quizProgress"></span></div>
         <button id="playQuestionAudio" class="question-speaker" type="button" aria-label="Play question audio"><img src="speaker.png" alt=""></button>
-        <h2 id="questionText"></h2><div id="answers" class="answers"></div><p id="quizFeedback" class="feedback" aria-live="polite"></p>
+        <h2 id="questionText"></h2>
+        <div id="answers" class="answers"></div>
+        <p id="quizFeedback" class="feedback" aria-live="polite"></p>
       </div>
-      <audio id="questionAudio" preload="metadata"></audio><audio id="animalAudio" preload="metadata"></audio>
+      <audio id="questionAudio" preload="metadata"></audio>
+      <audio id="animalAudio" preload="metadata"></audio>
     </section>
 
     <section id="resultScreen" class="screen result-screen" aria-labelledby="resultTitle">
-      <div class="result-card"><img class="result-medal" src="medal.png" alt=""><h2 id="resultTitle">Great exploring!</h2><p id="scoreText"></p>
-        <div class="result-actions"><button id="retryQuiz" type="button">Try again</button><button class="go-map" type="button">Back to map</button></div>
-        <p>How much did you enjoy it?</p><div id="ratingButtons" class="rating"><button data-rating="1" aria-label="1 star">★</button><button data-rating="2" aria-label="2 stars">★</button><button data-rating="3" aria-label="3 stars">★</button><button data-rating="4" aria-label="4 stars">★</button><button data-rating="5" aria-label="5 stars">★</button></div>
+      <div class="result-card">
+        <img class="result-medal" src="medal.png" alt="">
+        <h2 id="resultTitle">Great exploring!</h2>
+        <p id="scoreText"></p>
+        <div class="result-actions">
+          <button id="retryQuiz" type="button">Try again</button>
+          <button class="go-map" type="button">Back to map</button>
+        </div>
+        <p>How much did you enjoy it?</p>
+        <div id="ratingButtons" class="rating" aria-label="Rate this adventure">
+          <button data-rating="1" aria-label="1 star">★</button><button data-rating="2" aria-label="2 stars">★</button><button data-rating="3" aria-label="3 stars">★</button><button data-rating="4" aria-label="4 stars">★</button><button data-rating="5" aria-label="5 stars">★</button>
+        </div>
+        <div class="social-links" aria-label="Contact links">
+          <a class="social disabled" aria-disabled="true">WhatsApp</a>
+          <a class="social disabled" aria-disabled="true">Facebook</a>
+          <a class="social" href="https://instagram.com/ghada.invitations" target="_blank" rel="noopener">Instagram</a>
+          <a class="social" href="https://www.tiktok.com/@ghada.invitations" target="_blank" rel="noopener">TikTok</a>
+        </div>
       </div>
     </section>
   </main>
