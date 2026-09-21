@@ -84,6 +84,8 @@ function renderQuestion(){
   document.getElementById('antRunner').style.left=`${(questionIndex/9)*100}%`;
   document.querySelectorAll('.ant-dot').forEach((dot,i)=>dot.classList.toggle('reached',i<=questionIndex));
   document.getElementById('quizFeedback').textContent='';
+  const feedbackSticker=document.getElementById('feedbackSticker');
+  feedbackSticker.hidden=true;feedbackSticker.src='correct.png';
   const answers=document.getElementById('answers');answers.innerHTML='';
   item.a.forEach((answer,i)=>{
     const button=document.createElement('button');
@@ -122,11 +124,14 @@ function finishAnswer(choice,chosenButton){
   const buttons=[...document.querySelectorAll('.answer-button')];
   buttons.forEach((button,i)=>{button.disabled=true;if(i===item.c)button.classList.add('correct');if(button===chosenButton&&i!==item.c)button.classList.add('wrong')});
   const correct=choice===item.c;if(correct)score++;
+  const feedbackSticker=document.getElementById('feedbackSticker');
+  feedbackSticker.src=correct?'correct.png':'wrong.png';feedbackSticker.hidden=false;
   document.getElementById('quizFeedback').textContent=correct?'Great job!':choice===null?'Time is up!':`Good try! The answer is ${item.a[item.c]}.`;
   setTimeout(()=>{questionIndex++;questionIndex<10?renderQuestion():showResult()},1250);
 }
 function showResult(){
   stopAllAudio();
+  document.getElementById('resultScore').textContent=`${score}/10`;
   document.getElementById('scoreText').textContent=`You answered ${score} out of 10 questions correctly.`;
   document.getElementById('resultTitle').textContent=score>=8?'Amazing explorer!':score>=5?'Great exploring!':'Keep discovering!';
   showScreen('resultScreen');
