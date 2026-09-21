@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b7a4b">
+  <meta name="description" content="Yousef's interactive animal discovery lesson.">
+  <title>Yousef's Animal Discovery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+    <section id="welcome" class="screen welcome-screen active" aria-labelledby="welcome-title">
+      <picture class="screen-picture" aria-hidden="true">
+        <source media="(max-width: 700px)" srcset="assets/images/welcome-vertical.png">
+        <img src="assets/images/welcome-horizontal.png" alt="">
+      </picture>
+      <div class="welcome-shade"></div>
+      <div class="welcome-content">
+        <p class="eyebrow">Yousef's Animal Adventure</p>
+        <h1 id="welcome-title" lang="ar" dir="rtl">هيا نكتشف</h1>
+        <button id="startBtn" class="glass-button primary-button" type="button">Start exploring</button>
+      </div>
+    </section>
+
+    <section id="videoScreen" class="screen video-screen" aria-label="Welcome video">
+      <div class="video-frame">
+        <video id="welcomeVideo" playsinline preload="metadata" controls>
+          <source src="assets/video/welcome.mp4" type="video/mp4">
+        </video>
+        <button id="skipVideo" class="small-button" type="button">Go to map</button>
+      </div>
+    </section>
+
+    <section id="mapScreen" class="screen map-screen" aria-labelledby="map-title">
+      <header class="topbar">
+        <button class="icon-button go-welcome" type="button" aria-label="Back to welcome">⌂</button>
+        <div>
+          <p class="eyebrow">Choose a discovery</p>
+          <h2 id="map-title">Animal Adventure Map</h2>
+        </div>
+        <button id="openQuiz" class="quiz-button" type="button">Challenge</button>
+      </header>
+      <div id="lessonMap" class="lesson-map" aria-label="Six animal lessons"></div>
+    </section>
+
+    <section id="lessonScreen" class="screen lesson-screen" aria-labelledby="lessonTitle">
+      <header class="topbar compact">
+        <button class="icon-button go-map" type="button" aria-label="Back to map">←</button>
+        <div>
+          <p id="lessonNumber" class="eyebrow"></p>
+          <h2 id="lessonTitle"></h2>
+        </div>
+        <button id="speakLesson" class="icon-button" type="button" aria-label="Read lesson aloud">🔊</button>
+      </header>
+      <article class="book-layout">
+        <figure class="book-photo">
+          <img id="lessonImage" src="" alt="Book page for the lesson">
+          <figcaption>Original lesson reference</figcaption>
+        </figure>
+        <div class="paper-page">
+          <div id="animalBadge" class="animal-badge" aria-hidden="true"></div>
+          <h3 id="lessonQuestion"></h3>
+          <p id="lessonIntro" class="lesson-intro"></p>
+          <ul id="lessonFacts" class="fact-list"></ul>
+          <aside class="compare-box">
+            <span>Look & compare</span>
+            <p id="lessonCompare"></p>
+          </aside>
+          <div class="lesson-actions">
+            <button id="previousLesson" class="soft-button" type="button">Previous</button>
+            <button id="nextLesson" class="primary-button" type="button">Next lesson</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="quizScreen" class="screen quiz-screen" aria-labelledby="quizTitle">
+      <header class="topbar compact">
+        <button class="icon-button go-map" type="button" aria-label="Back to map">←</button>
+        <div>
+          <p class="eyebrow">10 questions</p>
+          <h2 id="quizTitle">Animal Challenge</h2>
+        </div>
+        <div class="timer" aria-live="polite"><span id="timerValue">10</span>s</div>
+      </header>
+      <div class="quiz-card">
+        <div class="quiz-progress"><span id="quizProgress"></span></div>
+        <p id="questionCount" class="question-count"></p>
+        <h3 id="questionText"></h3>
+        <div id="answers" class="answers"></div>
+        <p id="quizFeedback" class="quiz-feedback" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section id="resultScreen" class="screen result-screen" aria-labelledby="resultTitle">
+      <div class="result-card">
+        <div class="result-medal">🏅</div>
+        <p class="eyebrow">Challenge complete</p>
+        <h2 id="resultTitle">Great exploring!</h2>
+        <p id="scoreText" class="score-text"></p>
+        <div class="result-actions">
+          <button id="retryQuiz" class="primary-button" type="button">Try again</button>
+          <button class="soft-button go-map" type="button">Back to map</button>
+        </div>
+        <div class="rating" aria-label="Rate the experience">
+          <p>How much did you enjoy it?</p>
+          <div id="ratingButtons">
+            <button type="button" data-rating="1" aria-label="1 star">★</button>
+            <button type="button" data-rating="2" aria-label="2 stars">★</button>
+            <button type="button" data-rating="3" aria-label="3 stars">★</button>
+            <button type="button" data-rating="4" aria-label="4 stars">★</button>
+            <button type="button" data-rating="5" aria-label="5 stars">★</button>
+          </div>
+        </div>
+        <nav class="social-links" aria-label="Contact links">
+          <a id="whatsappLink" href="#" aria-label="WhatsApp">WA</a>
+          <a id="facebookLink" href="#" aria-label="Facebook">f</a>
+          <a id="instagramLink" href="https://instagram.com/ghada.invitations" target="_blank" rel="noreferrer" aria-label="Instagram">◎</a>
+          <a id="tiktokLink" href="https://tiktok.com/@ghada.invitations" target="_blank" rel="noreferrer" aria-label="TikTok">♪</a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
