@@ -1,20 +1,28 @@
-# Yousef's Animal Discovery
+# Yousef Animal Discovery — Image Package
 
-An interactive English animal lesson for children.
+## Desktop / Landscape
 
-## Open the lesson
+- `desktop/welcome.png` — welcome page, 1672×941
+- `desktop/adventure-map.png` — lesson map, 1672×941
+- `desktop/lessons/lesson-01.png` … `lesson-06.png` — six lessons, 1672×941 each
+- `desktop/quiz-background.png` — empty quiz background, 1672×941
 
-Open `dist/index.html` in a modern browser. For publishing, upload the contents of the `dist` folder to GitHub Pages.
+## Mobile / Portrait
 
-## Included
+- `mobile/welcome.png` — welcome page, 941×1672
+- `mobile/adventure-map.png` — lesson map, 941×1672
+- `mobile/lessons/lesson-01.jpg` … `lesson-06.jpg` — six lessons, 864×1536 each
+- `mobile/quiz-background.png` — empty quiz background, 941×1671
 
-- Responsive vertical/mobile and horizontal/desktop presentation
-- Welcome image and video
-- Six lessons based on the supplied book pages
-- English read-aloud support using the browser voice
-- Ten multiple-choice questions with a 10-second timer
-- Result, rating and social-contact screen
+## Shared Transparent Stickers
 
-## Edit contact links
+- `shared/animals/` — 12 animal PNG stickers
+- `shared/learning/` — 14 educational PNG stickers
+- `shared/ui/` — 16 navigation, feedback, reward and empty title/container PNG stickers
 
-Open `dist/index.html` and replace the `#` values for `whatsappLink` and `facebookLink`. Instagram and TikTok currently use `@ghada.invitations`.
+## Still Missing
+
+- Final result page in landscape and portrait formats
+- Any later variations specifically created for audio-only quiz questions
+
+All quiz wording, scores, timers, answer choices, social icons and result values should be added in code rather than baked into the background images.
