@@ -63,7 +63,7 @@ button{cursor:pointer}
 @media(max-width:700px){
   .map-art img{object-fit:cover;background:#8ed6ef}
   .map-node{width:21%}
-  .map-1{left:53%;top:76%}.map-2{left:56%;top:64%}.map-3{left:70%;top:52%}.map-4{left:43%;top:47%}.map-5{left:51%;top:35%}.map-6{left:65%;top:23%}.map-7{left:70%;top:9%}
+  .map-1{left:30%;top:69%;width:44%}.map-2{left:56%;top:64%}.map-3{left:70%;top:52%}.map-4{left:43%;top:47%}.map-5{left:51%;top:35%}.map-6{left:65%;top:23%}.map-7{left:70%;top:9%}
   .quiz-panel{left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);width:92vw;height:auto;min-height:72dvh;max-height:88dvh;padding:1.2rem;border-radius:28px;background:rgba(255,253,242,.95);box-shadow:var(--shadow);overflow:auto;pointer-events:auto}
   .quiz-topline{position:relative;inset:auto;display:flex;align-items:center;justify-content:space-between}
   #questionCount{position:static;width:auto;height:auto;display:block;font-size:1rem}
