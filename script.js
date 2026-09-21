@@ -81,7 +81,8 @@ function renderQuestion(){
   const item=activeQuestions[questionIndex];
   document.getElementById('questionCount').textContent=`Question ${questionIndex+1} of 10`;
   document.getElementById('questionText').textContent=item.q;
-  document.getElementById('quizProgress').style.width=`${(questionIndex+1)*10}%`;
+  document.getElementById('antRunner').style.left=`${(questionIndex/9)*100}%`;
+  document.querySelectorAll('.ant-dot').forEach((dot,i)=>dot.classList.toggle('reached',i<=questionIndex));
   document.getElementById('quizFeedback').textContent='';
   const answers=document.getElementById('answers');answers.innerHTML='';
   item.a.forEach((answer,i)=>{
