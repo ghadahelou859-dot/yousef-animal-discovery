@@ -65,7 +65,11 @@
           <span id="questionCount">Question 1 of 10</span>
           <span class="timer"><span id="timerValue">10</span>s</span>
         </div>
-        <div class="progress"><span id="quizProgress"></span></div>
+        <div class="ant-track" aria-hidden="true">
+          <span class="ant-dot"></span><span class="ant-dot"></span><span class="ant-dot"></span><span class="ant-dot"></span><span class="ant-dot"></span>
+          <span class="ant-dot"></span><span class="ant-dot"></span><span class="ant-dot"></span><span class="ant-dot"></span><span class="ant-dot"></span>
+          <span id="antRunner" class="ant-runner">🐜</span>
+        </div>
         <button id="playQuestionAudio" class="question-speaker" type="button" aria-label="Play question audio"><img src="speaker.png" alt=""></button>
         <h2 id="questionText"></h2>
         <div id="answers" class="answers"></div>
