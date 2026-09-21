@@ -30,30 +30,107 @@ const questions=[
  {q:'Listen carefully. Which animal makes this sound?',a:['Cat','Bird','Snake'],c:1,type:'sound',sound:'bird-sound.mp3'}
 ];
 
-function showScreen(id){screens.forEach(s=>s.classList.toggle('active',s.id===id));window.scrollTo(0,0)}
-function stopAllAudio(){[lessonAudio,questionAudio,animalAudio].forEach(a=>{a.pause();a.currentTime=0});speechSynthesis.cancel()}
+function showScreen(id){screens.forEach(screen=>screen.classList.toggle('active',screen.id===id));window.scrollTo(0,0)}
+function stopAllAudio(){[lessonAudio,questionAudio,animalAudio].forEach(audio=>{audio.pause();audio.currentTime=0});if('speechSynthesis' in window)window.speechSynthesis.cancel()}
 function shuffle(items){return [...items].sort(()=>Math.random()-.5)}
+function showMap(){stopTimer();stopAllAudio();welcomeVideo.pause();showScreen('mapScreen')}
 
-document.getElementById('startBtn').addEventListener('click',()=>{showScreen('videoScreen');welcomeVideo.play().catch(()=>{})});
-welcomeVideo.addEventListener('ended',()=>showScreen('mapScreen'));
-document.getElementById('skipVideo').addEventListener('click',()=>{welcomeVideo.pause();showScreen('mapScreen')});
-document.querySelectorAll('.map-node[data-lesson]').forEach(btn=>btn.addEventListener('click',()=>openLesson(Number(btn.dataset.lesson))));
-document.querySelectorAll('.go-map').forEach(btn=>btn.addEventListener('click',()=>{stopTimer();stopAllAudio();showScreen('mapScreen')}));
+document.getElementById('startBtn').addEventListener('click',()=>{
+  showScreen('videoScreen');
+  welcomeVideo.currentTime=0;
+  welcomeVideo.play().catch(()=>{document.getElementById('videoMessage').textContent='Tap the play button to begin.'});
+});
+welcomeVideo.addEventListener('ended',showMap);
+welcomeVideo.addEventListener('error',showMap);
+document.querySelectorAll('.map-node[data-lesson]').forEach(button=>button.addEventListener('click',()=>openLesson(Number(button.dataset.lesson))));
+document.querySelectorAll('.go-map').forEach(button=>button.addEventListener('click',showMap));
 
-function openLesson(index){lessonIndex=Math.max(0,Math.min(5,index));const n=String(lessonIndex+1).padStart(2,'0');lessonImage.src=`lesson-${n}-desktop.png`;lessonMobileSource.srcset=`lesson-${n}-mobile.jpg`;lessonImage.alt=`Lesson ${lessonIndex+1}`;lessonAudio.src=`lesson-${n}.mp3`;document.getElementById('previousLesson').disabled=lessonIndex===0;document.getElementById('nextLesson').textContent=lessonIndex===5?'Take the challenge':'Next';showScreen('lessonScreen')}
+function openLesson(index){
+  stopAllAudio();
+  lessonIndex=Math.max(0,Math.min(5,index));
+  const n=String(lessonIndex+1).padStart(2,'0');
+  lessonMobileSource.srcset=`lesson-${n}-mobile.jpg`;
+  lessonImage.dataset.fallback=`lesson-${n}-mobile.jpg`;
+  lessonImage.src=`lesson-${n}-desktop.png`;
+  lessonImage.alt=`Lesson ${lessonIndex+1}`;
+  lessonAudio.src=`lesson-${n}.mp3`;
+  document.getElementById('previousLesson').disabled=lessonIndex===0;
+  document.getElementById('nextLesson').textContent=lessonIndex===5?'Take the challenge':'Next';
+  showScreen('lessonScreen');
+  lessonAudio.play().catch(()=>{});
+}
+lessonImage.addEventListener('error',()=>{
+  const fallback=lessonImage.dataset.fallback;
+  if(fallback&&lessonImage.src!==new URL(fallback,location.href).href)lessonImage.src=fallback;
+});
 document.getElementById('playLessonAudio').addEventListener('click',()=>{lessonAudio.currentTime=0;lessonAudio.play().catch(()=>{})});
 document.getElementById('previousLesson').addEventListener('click',()=>openLesson(lessonIndex-1));
 document.getElementById('nextLesson').addEventListener('click',()=>lessonIndex===5?startQuiz():openLesson(lessonIndex+1));
 document.getElementById('openQuiz').addEventListener('click',startQuiz);
 document.getElementById('retryQuiz').addEventListener('click',startQuiz);
 
-function startQuiz(){const regular=shuffle(questions.filter(q=>q.type!=='sound')).slice(0,8);const sound=shuffle(questions.filter(q=>q.type==='sound')).slice(0,2);activeQuestions=shuffle([...regular,...sound]);questionIndex=0;score=0;showScreen('quizScreen');renderQuestion()}
-function renderQuestion(){answering=false;const item=activeQuestions[questionIndex];document.getElementById('questionCount').textContent=`Question ${questionIndex+1} of 10`;document.getElementById('questionText').textContent=item.q;document.getElementById('quizProgress').style.width=`${(questionIndex+1)*10}%`;document.getElementById('quizFeedback').textContent='';const answers=document.getElementById('answers');answers.innerHTML='';item.a.forEach((answer,i)=>{const b=document.createElement('button');b.className='answer-button';b.textContent=answer;b.addEventListener('click',()=>finishAnswer(i,b));answers.appendChild(b)});questionAudio.src=`question-${String((questions.indexOf(item)+1)).padStart(2,'0')}.mp3`;animalAudio.src=item.sound||'';if(item.type==='sound')playCurrentAudio();startTimer()}
-function playCurrentAudio(){const item=activeQuestions[questionIndex];if(item.type==='sound'){animalAudio.currentTime=0;animalAudio.play().catch(()=>speak(item.q))}else{questionAudio.currentTime=0;questionAudio.play().catch(()=>speak(item.q))}}
-function speak(text){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=.84;speechSynthesis.speak(u)}
+function startQuiz(){
+  stopAllAudio();
+  const regular=shuffle(questions.filter(item=>item.type!=='sound')).slice(0,8);
+  const sound=shuffle(questions.filter(item=>item.type==='sound')).slice(0,2);
+  activeQuestions=shuffle([...regular,...sound]);
+  questionIndex=0;score=0;showScreen('quizScreen');renderQuestion();
+}
+function renderQuestion(){
+  answering=false;
+  const item=activeQuestions[questionIndex];
+  document.getElementById('questionCount').textContent=`Question ${questionIndex+1} of 10`;
+  document.getElementById('questionText').textContent=item.q;
+  document.getElementById('quizProgress').style.width=`${(questionIndex+1)*10}%`;
+  document.getElementById('quizFeedback').textContent='';
+  const answers=document.getElementById('answers');answers.innerHTML='';
+  item.a.forEach((answer,i)=>{
+    const button=document.createElement('button');
+    button.className='answer-button';button.textContent=answer;
+    button.addEventListener('click',()=>finishAnswer(i,button));answers.appendChild(button);
+  });
+  questionAudio.src=`question-${String(questions.indexOf(item)+1).padStart(2,'0')}.mp3`;
+  animalAudio.src=item.sound||'';
+  startTimer();setTimeout(playCurrentAudio,250);
+}
+function playCurrentAudio(){
+  const item=activeQuestions[questionIndex];
+  if(!item)return;
+  if(item.type==='sound'){
+    speak(item.q);
+    setTimeout(()=>{animalAudio.currentTime=0;animalAudio.play().catch(()=>{})},1500);
+  }else{
+    questionAudio.currentTime=0;
+    questionAudio.play().catch(()=>speak(item.q));
+  }
+}
+function speak(text){
+  if(!('speechSynthesis' in window))return;
+  window.speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=.84;window.speechSynthesis.speak(utterance);
+}
 document.getElementById('playQuestionAudio').addEventListener('click',playCurrentAudio);
-function startTimer(){stopTimer();timeLeft=10;document.getElementById('timerValue').textContent=timeLeft;timerId=setInterval(()=>{timeLeft--;document.getElementById('timerValue').textContent=timeLeft;if(timeLeft<=0)finishAnswer(null)},1000)}
+function startTimer(){
+  stopTimer();timeLeft=10;document.getElementById('timerValue').textContent=timeLeft;
+  timerId=setInterval(()=>{timeLeft--;document.getElementById('timerValue').textContent=timeLeft;if(timeLeft<=0)finishAnswer(null)},1000);
+}
 function stopTimer(){if(timerId)clearInterval(timerId);timerId=null}
-function finishAnswer(choice,chosenButton){if(answering)return;answering=true;stopTimer();const item=activeQuestions[questionIndex];const buttons=[...document.querySelectorAll('.answer-button')];buttons.forEach((b,i)=>{b.disabled=true;if(i===item.c)b.classList.add('correct');if(b===chosenButton&&i!==item.c)b.classList.add('wrong')});const correct=choice===item.c;if(correct)score++;document.getElementById('quizFeedback').textContent=correct?'Great job!':choice===null?'Time is up!':`Good try! The answer is ${item.a[item.c]}.`;setTimeout(()=>{questionIndex++;questionIndex<10?renderQuestion():showResult()},1250)}
-function showResult(){stopAllAudio();document.getElementById('scoreText').textContent=`You answered ${score} out of 10 questions correctly.`;document.getElementById('resultTitle').textContent=score>=8?'Amazing explorer!':score>=5?'Great exploring!':'Keep discovering!';showScreen('resultScreen')}
-document.querySelectorAll('#ratingButtons button').forEach((b)=>b.addEventListener('click',()=>{const rating=Number(b.dataset.rating);localStorage.setItem('animalLessonRating',rating);document.querySelectorAll('#ratingButtons button').forEach((star,i)=>star.classList.toggle('selected',i<rating))}));
+function finishAnswer(choice,chosenButton){
+  if(answering)return;answering=true;stopTimer();
+  const item=activeQuestions[questionIndex];
+  const buttons=[...document.querySelectorAll('.answer-button')];
+  buttons.forEach((button,i)=>{button.disabled=true;if(i===item.c)button.classList.add('correct');if(button===chosenButton&&i!==item.c)button.classList.add('wrong')});
+  const correct=choice===item.c;if(correct)score++;
+  document.getElementById('quizFeedback').textContent=correct?'Great job!':choice===null?'Time is up!':`Good try! The answer is ${item.a[item.c]}.`;
+  setTimeout(()=>{questionIndex++;questionIndex<10?renderQuestion():showResult()},1250);
+}
+function showResult(){
+  stopAllAudio();
+  document.getElementById('scoreText').textContent=`You answered ${score} out of 10 questions correctly.`;
+  document.getElementById('resultTitle').textContent=score>=8?'Amazing explorer!':score>=5?'Great exploring!':'Keep discovering!';
+  showScreen('resultScreen');
+}
+document.querySelectorAll('#ratingButtons button').forEach(button=>button.addEventListener('click',()=>{
+  const rating=Number(button.dataset.rating);localStorage.setItem('animalLessonRating',String(rating));
+  document.querySelectorAll('#ratingButtons button').forEach((star,i)=>star.classList.toggle('selected',i<rating));
+}));
