@@ -58,7 +58,7 @@ button{cursor:pointer}
 
 .result-screen{background:#bdebd4}
 .result-screen.active{display:grid;place-items:center}
-.result-stage{position:relative;height:100dvh;aspect-ratio:1672/941;max-width:100vw;max-height:100dvh;overflow:hidden}
+.result-stage{position:relative;width:min(100vw,calc(100dvh * 1.777));height:auto;aspect-ratio:1672/941;overflow:hidden}
 .result-art,.result-art img{position:absolute;inset:0;width:100%;height:100%}
 .result-art img{object-fit:contain}
 .result-score{position:absolute;left:36%;top:31%;width:28%;height:12%;display:grid;place-items:center;color:#fff6d1;font-size:clamp(2rem,5vw,5rem);text-shadow:0 4px 0 #684714,0 6px 9px rgba(0,0,0,.28)}
@@ -99,7 +99,7 @@ button{cursor:pointer}
   .lesson-nav{width:calc(100% - 110px);justify-content:center}
   .lesson-nav button{padding:.65rem .9rem}
   .lesson-art img{object-position:center}
-  .result-stage{height:100dvh;aspect-ratio:941/1672}
+  .result-stage{width:min(100vw,calc(100dvh * .563));height:auto;aspect-ratio:941/1672}
   .result-score{left:25%;top:28.4%;width:50%;height:10%;font-size:clamp(2rem,10vw,4.3rem)}
   .result-retry{left:17.5%;top:43.5%;width:31%;height:8%}
   .result-map{left:50.5%;top:43.5%;width:31%;height:8%}
