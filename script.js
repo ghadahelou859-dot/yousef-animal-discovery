@@ -29,6 +29,7 @@ const questions=[
  {q:'Listen carefully. Which animal makes this sound?',a:['Dog','Bird','Fish'],c:0,type:'sound',sound:'dog-sound.mp3'},
  {q:'Listen carefully. Which animal makes this sound?',a:['Cat','Bird','Snake'],c:1,type:'sound',sound:'bird-sound.mp3'}
 ];
+const answerIcons={Snake:'🐍',Duck:'🦆',Cat:'🐱',Wings:'🪽',Fins:'🐟',Fur:'🐈',Scales:'🐠',Shell:'🐢',Two:'2️⃣',Three:'3️⃣',Five:'5️⃣',Four:'4️⃣',Six:'6️⃣',Eight:'8️⃣',Thorax:'🐜',Head:'🐜',Abdomen:'🐜','A shell':'🐢','A fin':'🐟','A wing':'🪽',Fox:'🦊',Spider:'🕷️',Bird:'🐦',Toys:'🧸','Food and water':'💧',Shoes:'👟',Ant:'🐜',Fish:'🐟',Butterfly:'🦋',Dog:'🐶',Elephant:'🐘','Polar bear':'🐻‍❄️',Air:'💨','A toy':'🧸','A shoe':'👟','In a nest':'🪹','In a shoe':'👟','In a book':'📖',Legs:'🐾'};
 
 function showScreen(id){screens.forEach(screen=>screen.classList.toggle('active',screen.id===id));window.scrollTo(0,0)}
 function stopAllAudio(){[lessonAudio,questionAudio,animalAudio].forEach(audio=>{audio.pause();audio.currentTime=0});if('speechSynthesis' in window)window.speechSynthesis.cancel()}
@@ -51,7 +52,7 @@ function openLesson(index){
   const n=String(lessonIndex+1).padStart(2,'0');
   lessonMobileSource.srcset=`lesson-${n}-mobile.jpg`;
   lessonImage.dataset.fallback=`lesson-${n}-mobile.jpg`;
-  lessonImage.src=`lesson-${n}-desktop.png`;
+  lessonImage.src=lessonIndex===0?`lesson-${n}-mobile.jpg`:`lesson-${n}-desktop.png`;
   lessonImage.alt=`Lesson ${lessonIndex+1}`;
   lessonAudio.src=`lesson-${n}.mp3`;
   document.getElementById('previousLesson').disabled=lessonIndex===0;
@@ -89,7 +90,10 @@ function renderQuestion(){
   const answers=document.getElementById('answers');answers.innerHTML='';
   item.a.forEach((answer,i)=>{
     const button=document.createElement('button');
-    button.className='answer-button';button.textContent=answer;
+    button.className='answer-button';
+    const icon=document.createElement('span');icon.className='answer-visual';icon.textContent=answerIcons[answer]||'🐾';icon.setAttribute('aria-hidden','true');
+    const label=document.createElement('span');label.className='answer-label';label.textContent=answer;
+    button.append(icon,label);
     button.addEventListener('click',()=>finishAnswer(i,button));answers.appendChild(button);
   });
   questionAudio.src=`question-${String(questions.indexOf(item)+1).padStart(2,'0')}.mp3`;
