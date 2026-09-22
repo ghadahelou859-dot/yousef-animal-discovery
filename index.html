@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#168a4f">
   <title>Yousef's Animal Discovery</title>
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
   <main id="app">
@@ -43,7 +43,7 @@
     <section id="lessonScreen" class="screen image-screen" aria-label="Lesson">
       <picture class="full-art lesson-art">
         <source id="lessonMobileSource" media="(max-width:700px)" srcset="lesson-01-mobile.jpg">
-        <img id="lessonImage" src="lesson-01-desktop.png" alt="Animal lesson">
+        <img id="lessonImage" src="lesson-01-mobile.jpg" alt="Animal lesson">
       </picture>
       <button class="round-control back-control go-map" type="button" aria-label="Back to map"><img src="back-arrow.png" alt=""></button>
       <button id="playLessonAudio" class="round-control audio-control" type="button" aria-label="Play lesson audio"><img src="speaker.png" alt=""></button>
@@ -82,32 +82,28 @@
     </section>
 
     <section id="resultScreen" class="screen result-screen" aria-labelledby="resultTitle">
-      <img class="result-confetti" src="confetti.png" alt="">
-      <div class="result-card">
-        <img class="result-medal" src="medal.png" alt="">
-        <h2 id="resultTitle">Great exploring!</h2>
-        <div class="score-ribbon-wrap">
-          <img src="score-ribbon.png" alt="">
-          <strong id="resultScore">0/10</strong>
-        </div>
-        <p id="scoreText"></p>
-        <div class="result-actions">
-          <button id="retryQuiz" type="button"><img src="retry.png" alt=""><span>Try again</span></button>
-          <button class="go-map" type="button"><img src="map-return.png" alt=""><span>Back to map</span></button>
-        </div>
-        <p>How much did you enjoy it?</p>
+      <div class="result-stage">
+        <picture class="result-art">
+          <source media="(max-width:700px)" srcset="result-page-mobile.png">
+          <img src="result-page-desktop.png" alt="Yousef and the ant celebrating the completed animal challenge">
+        </picture>
+        <h2 id="resultTitle" class="sr-only">Great exploring!</h2>
+        <strong id="resultScore" class="result-score">0/10</strong>
+        <p id="scoreText" class="sr-only"></p>
+        <button id="retryQuiz" class="result-hotspot result-retry" type="button" aria-label="Try again"></button>
+        <button class="go-map result-hotspot result-map" type="button" aria-label="Back to map"></button>
         <div id="ratingButtons" class="rating" aria-label="Rate this adventure">
-          <button data-rating="1" aria-label="1 star"><img src="star.png" alt=""></button><button data-rating="2" aria-label="2 stars"><img src="star.png" alt=""></button><button data-rating="3" aria-label="3 stars"><img src="star.png" alt=""></button><button data-rating="4" aria-label="4 stars"><img src="star.png" alt=""></button><button data-rating="5" aria-label="5 stars"><img src="star.png" alt=""></button>
+          <button data-rating="1" aria-label="1 star">★</button><button data-rating="2" aria-label="2 stars">★</button><button data-rating="3" aria-label="3 stars">★</button><button data-rating="4" aria-label="4 stars">★</button><button data-rating="5" aria-label="5 stars">★</button>
         </div>
-        <div class="social-links" aria-label="Contact links">
-          <a class="social" href="https://wa.me/970598494977" target="_blank" rel="noopener" aria-label="Contact us on WhatsApp">WhatsApp</a>
-          <a class="social disabled" aria-disabled="true">Facebook</a>
-          <a class="social" href="https://instagram.com/ghada.invitations" target="_blank" rel="noopener">Instagram</a>
-          <a class="social" href="https://www.tiktok.com/@ghada.invitations" target="_blank" rel="noopener">TikTok</a>
+        <div class="social-hotspots" aria-label="Contact links">
+          <a class="social-hotspot social-whatsapp" href="https://wa.me/970598494977" target="_blank" rel="noopener" aria-label="WhatsApp"></a>
+          <a class="social-hotspot social-facebook" aria-label="Facebook" aria-disabled="true"></a>
+          <a class="social-hotspot social-instagram" href="https://instagram.com/ghada.invitations" target="_blank" rel="noopener" aria-label="Instagram"></a>
+          <a class="social-hotspot social-tiktok" href="https://www.tiktok.com/@ghada.invitations" target="_blank" rel="noopener" aria-label="TikTok"></a>
         </div>
       </div>
     </section>
   </main>
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>
