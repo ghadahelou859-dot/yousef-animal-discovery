@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#168a4f">
   <title>Yousef's Animal Discovery</title>
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=12">
 </head>
 <body>
   <main id="app">
@@ -21,6 +21,7 @@
 
     <section id="videoScreen" class="screen video-screen" aria-label="Welcome video">
       <video id="welcomeVideo" playsinline preload="metadata" controls>
+        <source media="(min-width:701px)" src="YOUSF%20.mp4" type="video/mp4">
         <source src="welcome.mp4" type="video/mp4">
       </video>
       <p id="videoMessage" class="video-message" aria-live="polite"></p>
@@ -28,7 +29,7 @@
 
     <section id="mapScreen" class="screen image-screen" aria-label="Animal Adventure Map">
       <picture class="full-art map-art">
-        <source media="(max-width:700px)" srcset="adventure-map-desktop.png">
+        <source media="(max-width:700px)" srcset="adventure-map-mobile.png">
         <img src="adventure-map-desktop.png" alt="Animal Adventure Map">
       </picture>
       <button class="hotspot map-node map-1" data-lesson="0" type="button" aria-label="Open lesson 1"></button>
@@ -104,6 +105,6 @@
       </div>
     </section>
   </main>
-  <script src="script.js?v=6"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>
