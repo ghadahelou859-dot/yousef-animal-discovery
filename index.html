@@ -101,14 +101,16 @@
           <button data-rating="1" aria-label="1 star">★</button><button data-rating="2" aria-label="2 stars">★</button><button data-rating="3" aria-label="3 stars">★</button><button data-rating="4" aria-label="4 stars">★</button><button data-rating="5" aria-label="5 stars">★</button>
         </div>
         <div class="social-hotspots" aria-label="Contact links">
-          <a class="social-hotspot social-whatsapp" href="https://wa.me/970598494977" target="_blank" rel="noopener" aria-label="WhatsApp"></a>
+          <a class="social-hotspot social-whatsapp" href="https://wa.me/970598494977" target="_blank" rel="noopener" aria-label="WhatsApp" data-analytics="social_click" data-platform="whatsapp" data-button="result-whatsapp"></a>
           <a class="social-hotspot social-facebook" aria-label="Facebook" aria-disabled="true"></a>
-          <a class="social-hotspot social-instagram" href="https://instagram.com/ghada.invitations" target="_blank" rel="noopener" aria-label="Instagram"></a>
-          <a class="social-hotspot social-tiktok" href="https://www.tiktok.com/@ghada.invitations" target="_blank" rel="noopener" aria-label="TikTok"></a>
+          <a class="social-hotspot social-instagram" href="https://instagram.com/ghada.invitations" target="_blank" rel="noopener" aria-label="Instagram" data-analytics="social_click" data-platform="instagram" data-button="result-instagram"></a>
+          <a class="social-hotspot social-tiktok" href="https://www.tiktok.com/@ghada.invitations" target="_blank" rel="noopener" aria-label="TikTok" data-analytics="social_click" data-platform="tiktok" data-button="result-tiktok"></a>
         </div>
       </div>
     </section>
   </main>
-  <script src="script.js?v=11"></script>
+  <script src="analytics.js?v=1"></script>
+  <script>GhadaAnalytics.init({projectSlug:"عالم-الحيونات-مع-يوسف",pageKey:"main"});</script>
+  <script src="script.js?v=12"></script>
 </body>
 </html>
