@@ -72,8 +72,14 @@ document.getElementById('retryQuiz').addEventListener('click',startQuiz);
 
 function startQuiz(){
   stopAllAudio();
+  document.getElementById('celebration').hidden=true;
   activeQuestions=shuffle(questions).slice(0,10);
-  questionIndex=0;score=0;showScreen('quizScreen');renderQuestion();
+  questionIndex=0;score=0;showScreen('quizScreen');
+  const runner=document.getElementById('antRunner');
+  runner.classList.add('resetting');
+  runner.style.left='0%';
+  renderQuestion();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>runner.classList.remove('resetting')));
 }
 function renderQuestion(){
   answering=false;
@@ -121,15 +127,15 @@ function startTimer(){
 }
 function stopTimer(){if(timerId)clearInterval(timerId);timerId=null}
 function updateAntProgress(){
-  document.getElementById('antRunner').style.left=`${(score/10)*100}%`;
-  document.querySelectorAll('.ant-dot').forEach((dot,i)=>dot.classList.toggle('reached',i<score));
+  document.getElementById('antRunner').style.left=`${(questionIndex/9)*100}%`;
+  document.querySelectorAll('.ant-dot').forEach((dot,i)=>dot.classList.toggle('reached',i<=questionIndex));
 }
 function finishAnswer(choice,chosenButton){
   if(answering)return;answering=true;stopTimer();
   const item=activeQuestions[questionIndex];
   const buttons=[...document.querySelectorAll('.answer-button')];
   buttons.forEach((button,i)=>{button.disabled=true;if(i===item.c)button.classList.add('correct');if(button===chosenButton&&i!==item.c)button.classList.add('wrong')});
-  const correct=choice===item.c;if(correct){score++;updateAntProgress()}
+  const correct=choice===item.c;if(correct)score++;
   const feedbackSticker=document.getElementById('feedbackSticker');
   feedbackSticker.src=correct?'correct.png':'wrong.png';feedbackSticker.hidden=false;
   document.getElementById('quizFeedback').textContent=correct?'Great job!':choice===null?'Time is up!':`Good try! The answer is ${item.a[item.c]}.`;
@@ -140,6 +146,18 @@ function showResult(){
   document.getElementById('resultScore').textContent=`${score}/10`;
   document.getElementById('scoreText').textContent=`You answered ${score} out of 10 questions correctly.`;
   document.getElementById('resultTitle').textContent=score>=8?'Amazing explorer!':score>=5?'Great exploring!':'Keep discovering!';
+  const celebration=document.getElementById('celebration');
+  celebration.replaceChildren();
+  celebration.hidden=score<8;
+  if(score>=8){
+    for(let i=0;i<12;i++){
+      const piece=document.createElement('img');
+      piece.src='confetti.png';piece.alt='';
+      piece.style.left=`${(i*37)%96}%`;
+      piece.style.animationDelay=`${(i%6)*.18}s`;
+      celebration.appendChild(piece);
+    }
+  }
   showScreen('resultScreen');
 }
 document.querySelectorAll('#ratingButtons button').forEach(button=>button.addEventListener('click',()=>{

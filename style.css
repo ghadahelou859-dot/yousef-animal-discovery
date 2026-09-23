@@ -44,9 +44,10 @@ button{cursor:pointer}
 #questionCount{position:absolute;left:39.5%;top:17.6%;width:20%;height:7.4%;display:grid;place-items:center;font-size:clamp(.9rem,1.45vw,1.7rem)}
 .timer{position:absolute;left:90.5%;top:15.3%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;width:11%;height:19%;border-radius:50%;background:transparent;color:#f15f35;font-size:clamp(.9rem,1.4vw,1.55rem);line-height:1.05}
 .timer #timerValue{font-size:clamp(1.5rem,3.2vw,3.8rem)}
-.ant-track{position:absolute;left:22.5%;top:24.7%;width:54.5%;height:8%;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
+.ant-track{position:absolute;left:24.5%;top:24.7%;width:51%;height:8%;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
 .ant-dot{width:clamp(8px,1.25vw,23px);aspect-ratio:1;border-radius:50%;background:transparent}
 .ant-runner{position:absolute;left:0;top:50%;width:clamp(42px,5.2vw,92px);height:auto;transform:translate(-50%,-62%);filter:drop-shadow(0 4px 3px rgba(70,43,12,.28));transition:left .55s cubic-bezier(.2,.8,.2,1);z-index:2}
+.ant-runner.resetting{transition:none}
 .question-speaker{position:absolute;right:20.4%;top:32.2%;width:clamp(58px,6vw,108px);height:clamp(58px,6vw,108px);border:0;background:transparent;padding:4px;pointer-events:auto}
 .quiz-panel h2{position:absolute;left:17%;top:28%;width:58%;height:16%;margin:0;display:grid;place-items:center;padding:1rem 2rem;font-size:clamp(1.35rem,2.7vw,3.1rem);line-height:1.15}
 .answers{position:absolute;left:10.1%;top:50%;width:79.8%;height:43.5%;display:grid;grid-template-columns:repeat(3,1fr);gap:1.65%;pointer-events:auto}
@@ -68,6 +69,11 @@ button{cursor:pointer}
 .result-stage{position:relative;width:min(100vw,calc(100dvh * 1.777));height:auto;aspect-ratio:1672/941;overflow:hidden}
 .result-art,.result-art img{position:absolute;inset:0;width:100%;height:100%}
 .result-art img{object-fit:contain}
+.celebration{position:absolute;inset:0;z-index:6;overflow:hidden;pointer-events:none}
+.celebration[hidden]{display:none}
+.celebration img{position:absolute;top:-16%;width:clamp(56px,7vw,110px);height:auto;animation:confetti-fall 4s ease-in forwards}
+@keyframes confetti-fall{0%{transform:translateY(0) rotate(-25deg);opacity:0}12%{opacity:1}85%{opacity:1}100%{transform:translateY(180vh) rotate(500deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){.celebration img{animation:none;top:8%;opacity:1}}
 .result-score{position:absolute;left:36%;top:31%;width:28%;height:12%;display:grid;place-items:center;color:#fff6d1;font-size:clamp(2rem,5vw,5rem);text-shadow:0 4px 0 #684714,0 6px 9px rgba(0,0,0,.28)}
 .result-hotspot,.social-hotspot{position:absolute;border:0;background:transparent;z-index:3;border-radius:999px}
 .result-hotspot:focus-visible,.social-hotspot:focus-visible{outline:4px solid #ffe36a;outline-offset:-4px}
@@ -89,7 +95,7 @@ button{cursor:pointer}
   #questionCount{position:absolute;left:31%;top:17%;width:38%;height:4.5%;display:grid;font-size:clamp(.8rem,3.6vw,1.15rem)}
   .timer{left:87.6%;top:10.4%;width:15.5%;height:9.5%;font-size:clamp(.72rem,3vw,.95rem);color:#fff6c9;text-shadow:0 2px 0 #165b32}
   .timer #timerValue{font-size:clamp(1.25rem,6vw,2rem)}
-  .ant-track{position:absolute;left:15%;top:21.3%;width:70%;height:7%;margin:0}
+  .ant-track{position:absolute;left:15.5%;top:21.3%;width:69%;height:7%;margin:0}
   .ant-runner{width:clamp(38px,11vw,58px)}
   .ant-dot{background:transparent;box-shadow:none}
   .question-speaker{position:absolute;left:44.5%;right:auto;top:39%;width:11%;height:auto;padding:0}
