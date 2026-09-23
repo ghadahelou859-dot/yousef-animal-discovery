@@ -25,11 +25,10 @@ const questions=[
  {q:'What does a dog use to walk and run?',a:['Legs','Fins','Wings'],c:0},
  {q:'Which animal is small?',a:['Ant','Elephant','Polar bear'],c:0},
  {q:'What does an animal need to breathe?',a:['Air','A toy','A shoe'],c:0},
- {q:'Where can a bird live?',a:['In a nest','In a shoe','In a book'],c:0},
- {q:'Listen carefully. Which animal makes this sound?',a:['Dog','Bird','Fish'],c:0,type:'sound',sound:'dog-sound.mp3'},
- {q:'Listen carefully. Which animal makes this sound?',a:['Cat','Bird','Snake'],c:1,type:'sound',sound:'bird-sound.mp3'}
+ {q:'Where can a bird live?',a:['In a nest','In a shoe','In a book'],c:0}
 ];
-const answerIcons={Snake:'🐍',Duck:'🦆',Cat:'🐱',Wings:'🪽',Fins:'🐟',Fur:'🐈',Scales:'🐠',Shell:'🐢',Two:'2️⃣',Three:'3️⃣',Five:'5️⃣',Four:'4️⃣',Six:'6️⃣',Eight:'8️⃣',Thorax:'🐜',Head:'🐜',Abdomen:'🐜','A shell':'🐢','A fin':'🐟','A wing':'🪽',Fox:'🦊',Spider:'🕷️',Bird:'🐦',Toys:'🧸','Food and water':'💧',Shoes:'👟',Ant:'🐜',Fish:'🐟',Butterfly:'🦋',Dog:'🐶',Elephant:'🐘','Polar bear':'🐻‍❄️',Air:'💨','A toy':'🧸','A shoe':'👟','In a nest':'🪹','In a shoe':'👟','In a book':'📖',Legs:'🐾'};
+const answerStickers={Snake:'snake.png',Cat:'cat.png',Wings:'feather.png',Fins:'fin.png',Fur:'fur.png',Scales:'scales.png',Shell:'shell.png',Thorax:'ant-thorax.png',Head:'ant-head.png',Abdomen:'ant-abdomen.png','A shell':'shell.png','A fin':'fin.png','A wing':'feather.png',Spider:'spider.png',Bird:'bird.png','Food and water':'water.png',Ant:'ant.png',Fish:'fish.png',Butterfly:'butterfly.png',Dog:'dog.png','Polar bear':'polar-bear.png',Air:'air.png','In a nest':'nest.png',Legs:'six-legs.png',Turtle:'turtle.png'};
+const answerFallback={Duck:'🦆',Two:'2️⃣',Three:'3️⃣',Five:'5️⃣',Four:'4️⃣',Six:'6️⃣',Eight:'8️⃣',Fox:'🦊',Toys:'🧸',Shoes:'👟',Elephant:'🐘','A toy':'🧸','A shoe':'👟','In a shoe':'👟','In a book':'📖'};
 
 function showScreen(id){screens.forEach(screen=>screen.classList.toggle('active',screen.id===id));window.scrollTo(0,0)}
 function stopAllAudio(){[lessonAudio,questionAudio,animalAudio].forEach(audio=>{audio.pause();audio.currentTime=0});if('speechSynthesis' in window)window.speechSynthesis.cancel()}
@@ -52,7 +51,7 @@ function openLesson(index){
   const n=String(lessonIndex+1).padStart(2,'0');
   lessonMobileSource.srcset=`lesson-${n}-mobile.jpg`;
   lessonImage.dataset.fallback=`lesson-${n}-mobile.jpg`;
-  lessonImage.src=lessonIndex===0?`lesson-${n}-mobile.jpg`:`lesson-${n}-desktop.png`;
+  lessonImage.src=`lesson-${n}-desktop.png`;
   lessonImage.alt=`Lesson ${lessonIndex+1}`;
   lessonAudio.src=`lesson-${n}.mp3`;
   document.getElementById('previousLesson').disabled=lessonIndex===0;
@@ -72,9 +71,7 @@ document.getElementById('retryQuiz').addEventListener('click',startQuiz);
 
 function startQuiz(){
   stopAllAudio();
-  const regular=shuffle(questions.filter(item=>item.type!=='sound')).slice(0,8);
-  const sound=shuffle(questions.filter(item=>item.type==='sound')).slice(0,2);
-  activeQuestions=shuffle([...regular,...sound]);
+  activeQuestions=shuffle(questions).slice(0,10);
   questionIndex=0;score=0;showScreen('quizScreen');renderQuestion();
 }
 function renderQuestion(){
@@ -82,8 +79,7 @@ function renderQuestion(){
   const item=activeQuestions[questionIndex];
   document.getElementById('questionCount').textContent=`Question ${questionIndex+1} of 10`;
   document.getElementById('questionText').textContent=item.q;
-  document.getElementById('antRunner').style.left=`${(questionIndex/9)*100}%`;
-  document.querySelectorAll('.ant-dot').forEach((dot,i)=>dot.classList.toggle('reached',i<=questionIndex));
+  updateAntProgress();
   document.getElementById('quizFeedback').textContent='';
   const feedbackSticker=document.getElementById('feedbackSticker');
   feedbackSticker.hidden=true;feedbackSticker.src='correct.png';
@@ -91,7 +87,8 @@ function renderQuestion(){
   item.a.forEach((answer,i)=>{
     const button=document.createElement('button');
     button.className='answer-button';
-    const icon=document.createElement('span');icon.className='answer-visual';icon.textContent=answerIcons[answer]||'🐾';icon.setAttribute('aria-hidden','true');
+    const icon=document.createElement('span');icon.className='answer-visual';icon.setAttribute('aria-hidden','true');
+    if(answerStickers[answer]){const image=document.createElement('img');image.src=answerStickers[answer];image.alt='';icon.appendChild(image)}else{icon.textContent=answerFallback[answer]||'🐾'}
     const label=document.createElement('span');label.className='answer-label';label.textContent=answer;
     button.append(icon,label);
     button.addEventListener('click',()=>finishAnswer(i,button));answers.appendChild(button);
@@ -122,12 +119,16 @@ function startTimer(){
   timerId=setInterval(()=>{timeLeft--;document.getElementById('timerValue').textContent=timeLeft;if(timeLeft<=0)finishAnswer(null)},1000);
 }
 function stopTimer(){if(timerId)clearInterval(timerId);timerId=null}
+function updateAntProgress(){
+  document.getElementById('antRunner').style.left=`${(score/10)*100}%`;
+  document.querySelectorAll('.ant-dot').forEach((dot,i)=>dot.classList.toggle('reached',i<score));
+}
 function finishAnswer(choice,chosenButton){
   if(answering)return;answering=true;stopTimer();
   const item=activeQuestions[questionIndex];
   const buttons=[...document.querySelectorAll('.answer-button')];
   buttons.forEach((button,i)=>{button.disabled=true;if(i===item.c)button.classList.add('correct');if(button===chosenButton&&i!==item.c)button.classList.add('wrong')});
-  const correct=choice===item.c;if(correct)score++;
+  const correct=choice===item.c;if(correct){score++;updateAntProgress()}
   const feedbackSticker=document.getElementById('feedbackSticker');
   feedbackSticker.src=correct?'correct.png':'wrong.png';feedbackSticker.hidden=false;
   document.getElementById('quizFeedback').textContent=correct?'Great job!':choice===null?'Time is up!':`Good try! The answer is ${item.a[item.c]}.`;
