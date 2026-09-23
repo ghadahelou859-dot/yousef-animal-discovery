@@ -48,6 +48,7 @@ button{cursor:pointer}
 .answer-button{width:100%;height:100%;border:0;border-radius:28px;background:transparent;font-size:clamp(1.2rem,2.25vw,2.75rem);font-weight:900;color:var(--dark)}
 .answer-button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem}
 .answer-visual{font-size:clamp(3.1rem,7vw,7.5rem);line-height:1;filter:drop-shadow(0 5px 5px rgba(0,0,0,.16))}
+.answer-visual img{display:block;width:clamp(82px,13vw,210px);height:clamp(82px,13vw,210px);object-fit:contain}
 .answer-label{line-height:1.05}
 .answer-button:hover,.answer-button:focus-visible{background:rgba(255,255,255,.28);outline:4px solid rgba(46,177,75,.55);outline-offset:-8px}
 .answer-button.correct{background:#d8f7ce;border-color:#37a52a}
@@ -90,6 +91,7 @@ button{cursor:pointer}
   .answers{position:absolute;left:8%;top:45.5%;width:84%;height:43.5%;display:grid;grid-template-columns:1fr;grid-template-rows:repeat(3,1fr);gap:2.8%;pointer-events:auto}
   .answer-button{width:100%;height:100%;min-height:0;border:0;border-radius:22px;background:transparent;padding:0 4% 0 14%;font-size:clamp(1.05rem,5vw,1.6rem);flex-direction:row;justify-content:flex-start;gap:1rem}
   .answer-visual{font-size:clamp(2.1rem,10vw,4rem);min-width:25%}
+  .answer-visual img{width:clamp(58px,17vw,88px);height:clamp(58px,17vw,88px)}
   .answer-button:hover,.answer-button:focus-visible{background:rgba(255,255,255,.18);outline:3px solid rgba(46,177,75,.55);outline-offset:-7px}
   .answer-button.correct{background:rgba(216,247,206,.62)}
   .answer-button.wrong{background:rgba(255,224,214,.62)}
