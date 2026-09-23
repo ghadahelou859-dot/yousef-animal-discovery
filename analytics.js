@@ -78,5 +78,19 @@
       },true);
     }catch(e){console.warn("[GhadaAnalytics]",e.message)}
   }
-  window.GhadaAnalytics={init,track};
+  async function likeRequest(functionName){
+    const r=await fetch(SUPABASE_URL+"/rest/v1/rpc/"+functionName,{
+      method:"POST",headers:HEADERS,
+      body:JSON.stringify({p_slug:"yousef-animal-discovery",p_visitor_key:visitorKey()})
+    });
+    if(!r.ok)throw new Error("likes_unavailable");
+    return r.json();
+  }
+  async function likeStats(){
+    const rows=await likeRequest("get_invitation_stats");
+    if(!rows.length)throw new Error("likes_project_not_found");
+    return rows[0];
+  }
+  async function toggleLike(){return likeRequest("toggle_invitation_like")}
+  window.GhadaAnalytics={init,track,likeStats,toggleLike};
 })();

@@ -5,6 +5,15 @@ button,a{font:inherit}
 button{cursor:pointer}
 .screen{display:none;position:relative;width:100%;height:100dvh;overflow:hidden}
 .screen.active{display:block}
+.project-like{position:fixed;z-index:12;right:max(10px,env(safe-area-inset-right));top:46%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:72px;min-height:72px;border:3px solid #eec36d;border-radius:999px;background:#fff9e8;color:#b42f48;box-shadow:0 7px 20px rgba(25,65,32,.22);font-weight:900;cursor:pointer}
+.project-like[hidden]{display:none}
+.project-like .heart-glyph{font-size:2.1rem;line-height:1;transition:transform .18s}
+.project-like[aria-pressed="true"] .heart-glyph{color:#ed4068}
+.project-like:active .heart-glyph,.project-like.pop .heart-glyph{transform:scale(1.3)}
+.project-like .like-count{font-size:.95rem;line-height:1;color:#304e39}
+.project-like:focus-visible{outline:3px solid #ffdb58;outline-offset:3px}
+.project-like:disabled{opacity:.65;cursor:wait}
+@media(max-width:700px){.project-like{width:58px;min-height:58px;right:max(7px,env(safe-area-inset-right))}.project-like .heart-glyph{font-size:1.7rem}.project-like .like-count{font-size:.8rem}}
 .image-screen{background:#bdebd4}
 .full-art,.full-art img{position:absolute;inset:0;width:100%;height:100%}
 .full-art img{object-fit:cover;object-position:center}

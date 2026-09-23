@@ -30,7 +30,32 @@ const questions=[
 const answerStickers={Snake:'snake.png',Cat:'cat.png',Wings:'feather.png',Fins:'fin.png',Fur:'fur.png',Scales:'scales.png',Shell:'shell.png',Thorax:'ant-thorax.png',Head:'ant-head.png',Abdomen:'ant-abdomen.png','A shell':'shell.png','A fin':'fin.png','A wing':'feather.png',Spider:'spider.png',Bird:'bird.png','Food and water':'water.png',Ant:'ant.png',Fish:'fish.png',Butterfly:'butterfly.png',Dog:'dog.png','Polar bear':'polar-bear.png',Air:'air.png','In a nest':'nest.png',Legs:'six-legs.png',Turtle:'turtle.png'};
 const answerFallback={Duck:'🦆',Two:'2️⃣',Three:'3️⃣',Five:'5️⃣',Four:'4️⃣',Six:'6️⃣',Eight:'8️⃣',Fox:'🦊',Toys:'🧸',Shoes:'👟',Elephant:'🐘','A toy':'🧸','A shoe':'👟','In a shoe':'👟','In a book':'📖'};
 
-function showScreen(id){screens.forEach(screen=>screen.classList.toggle('active',screen.id===id));window.scrollTo(0,0)}
+function showScreen(id){
+  screens.forEach(screen=>screen.classList.toggle('active',screen.id===id));
+  document.getElementById('projectLike').hidden=!['mapScreen','lessonScreen','resultScreen'].includes(id);
+  if(!document.getElementById('projectLike').hidden)refreshLikes();
+  window.scrollTo(0,0);
+}
+const projectLike=document.getElementById('projectLike');
+async function refreshLikes(){
+  try{
+    const stats=await GhadaAnalytics.likeStats();
+    document.getElementById('likeCount').textContent=Number(stats.like_count).toLocaleString('en-US');
+    projectLike.setAttribute('aria-pressed',String(stats.liked_by_me));
+  }catch(e){document.getElementById('likeCount').textContent='—'}
+}
+projectLike.addEventListener('click',async()=>{
+  projectLike.disabled=true;
+  try{
+    await GhadaAnalytics.toggleLike();
+    await refreshLikes();
+    projectLike.classList.remove('pop');
+    void projectLike.offsetWidth;
+    projectLike.classList.add('pop');
+    setTimeout(()=>projectLike.classList.remove('pop'),250);
+  }catch(e){await refreshLikes()}
+  finally{projectLike.disabled=false}
+});
 function stopAllAudio(){[lessonAudio,questionAudio,animalAudio].forEach(audio=>{audio.pause();audio.currentTime=0});if('speechSynthesis' in window)window.speechSynthesis.cancel()}
 function shuffle(items){return [...items].sort(()=>Math.random()-.5)}
 function showMap(){stopTimer();stopAllAudio();welcomeVideo.pause();showScreen('mapScreen');positionMapTargets()}
