@@ -145,3 +145,26 @@ document.querySelectorAll('#ratingButtons button').forEach(button=>button.addEve
   const rating=Number(button.dataset.rating);localStorage.setItem('animalLessonRating',String(rating));
   document.querySelectorAll('#ratingButtons button').forEach((star,i)=>star.classList.toggle('selected',i<rating));
 }));
+
+// Match the clickable circles to the artwork, including when object-fit crops the map.
+function positionMapTargets(){
+  const frame=document.getElementById('mapScreen');
+  const portrait=window.matchMedia('(max-width:700px)').matches;
+  const art=portrait?{width:941,height:1672,circles:[[590,1010,100],[800,915,96],[535,776,92],[750,669,92],[638,523,92],[828,394,92]],bear:[375,1210,155]}:
+    {width:1672,height:941,circles:[[951,747,95],[1275,718,96],[1077,563,88],[1256,490,88],[1378,372,88],[1492,219,88]],bear:[700,710,145]};
+  const scale=Math.max(frame.clientWidth/art.width,frame.clientHeight/art.height);
+  const offsetX=(frame.clientWidth-art.width*scale)/2;
+  const offsetY=(frame.clientHeight-art.height*scale)/2;
+  frame.querySelectorAll('.map-node').forEach((button,index)=>{
+    const [x,y,r]=art.circles[index];
+    button.style.left=`${offsetX+(x-r)*scale}px`;
+    button.style.top=`${offsetY+(y-r)*scale}px`;
+    button.style.width=`${2*r*scale}px`;
+  });
+  const bear=frame.querySelector('.map-polar-bear');
+  bear.style.left=`${offsetX+art.bear[0]*scale}px`;
+  bear.style.top=`${offsetY+art.bear[1]*scale}px`;
+  bear.style.width=`${art.bear[2]*scale}px`;
+}
+window.addEventListener('resize',positionMapTargets);
+positionMapTargets();

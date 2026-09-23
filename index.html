@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#168a4f">
   <title>Yousef's Animal Discovery</title>
-  <link rel="stylesheet" href="style.css?v=12">
+  <link rel="stylesheet" href="style.css?v=13">
 </head>
 <body>
   <main id="app">
@@ -29,15 +29,15 @@
 
     <section id="mapScreen" class="screen image-screen" aria-label="Animal Adventure Map">
       <picture class="full-art map-art">
-        <source media="(max-width:700px)" srcset="adventure-map-mobile.png">
-        <img src="adventure-map-desktop.png" alt="Animal Adventure Map">
+        <source media="(max-width:700px)" srcset="adventure-map-mobile.png?v=2">
+        <img src="adventure-map-desktop.png?v=2" alt="Animal Adventure Map">
       </picture>
-      <button class="hotspot map-node map-1" data-lesson="0" type="button" aria-label="Open lesson 1"></button>
-      <button class="hotspot map-node map-2" data-lesson="1" type="button" aria-label="Open lesson 2"></button>
-      <button class="hotspot map-node map-3" data-lesson="2" type="button" aria-label="Open lesson 3"></button>
-      <button class="hotspot map-node map-4" data-lesson="3" type="button" aria-label="Open lesson 4"></button>
-      <button class="hotspot map-node map-5" data-lesson="4" type="button" aria-label="Open lesson 5"></button>
-      <button class="hotspot map-node map-6" data-lesson="5" type="button" aria-label="Open lesson 6"></button>
+      <img class="map-polar-bear" src="polar-bear.png" alt="" aria-hidden="true">
+      <button class="hotspot map-node map-2" data-lesson="1" type="button" aria-label="Open Movement"></button>
+      <button class="hotspot map-node map-3" data-lesson="2" type="button" aria-label="Open Coverings"></button>
+      <button class="hotspot map-node map-4" data-lesson="3" type="button" aria-label="Open Insects"></button>
+      <button class="hotspot map-node map-5" data-lesson="4" type="button" aria-label="Open Ant Parts"></button>
+      <button class="hotspot map-node map-6" data-lesson="5" type="button" aria-label="Open Animal Needs"></button>
       <button id="openQuiz" class="hotspot map-node map-7" type="button" aria-label="Open challenge"></button>
     </section>
 
@@ -105,6 +105,6 @@
       </div>
     </section>
   </main>
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>
