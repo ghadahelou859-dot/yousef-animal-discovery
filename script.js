@@ -58,7 +58,7 @@ function openLesson(index){
   document.getElementById('previousLesson').disabled=lessonIndex===0;
   document.getElementById('nextLesson').textContent=lessonIndex===5?'Take the challenge':'Next';
   showScreen('lessonScreen');
-  lessonAudio.play().catch(()=>{});
+  if(lessonIndex===0)lessonAudio.play().catch(()=>{});
 }
 lessonImage.addEventListener('error',()=>{
   const fallback=lessonImage.dataset.fallback;
