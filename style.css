@@ -22,7 +22,12 @@ button{cursor:pointer}
 .video-message:empty{display:none}
 
 .map-node{width:14%;aspect-ratio:1;border-radius:50%;z-index:3}
-.map-polar-bear{position:absolute;left:42%;top:75%;width:9%;height:auto;z-index:4;pointer-events:none}
+.map-bear{position:absolute;z-index:4;width:13%;padding:0;border:0;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;filter:drop-shadow(0 6px 8px rgba(34,65,34,.25))}
+.map-bear img{display:block;width:100%;height:auto;animation:bear-greet 2.8s ease-in-out infinite}
+.map-bear span{display:block;margin-top:-.35em;padding:.15em .7em;border:3px solid #936019;border-radius:999px;background:#fff8de;color:#215432;font-size:clamp(.8rem,1.7vw,1.4rem);font-weight:900;box-shadow:0 3px 0 #b88b29}
+.map-bear:hover,.map-bear:focus-visible{outline:3px solid #ffd447;border-radius:22px}
+@keyframes bear-greet{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media(prefers-reduced-motion:reduce){.map-bear img{animation:none}}
 
 .round-control{position:absolute;z-index:5;width:clamp(50px,7vw,82px);aspect-ratio:1;border:0;border-radius:50%;background:rgba(255,255,255,.82);box-shadow:0 8px 24px rgba(0,0,0,.18);padding:7px}
 .round-control img,.question-speaker img{width:100%;height:100%;object-fit:contain}
@@ -76,7 +81,7 @@ button{cursor:pointer}
 @media(max-width:700px){
   .map-art img{object-fit:cover;background:#8ed6ef}
   .map-node{width:21%}
-  .map-polar-bear{left:38%;top:76%;width:20%}
+  .map-bear span{font-size:clamp(.8rem,3.4vw,1rem)}
   .quiz-panel{inset:0;width:100%;height:100%;min-height:0;max-height:none;padding:0;border-radius:0;background:transparent;box-shadow:none;overflow:hidden;pointer-events:none}
   .quiz-title{left:22%;top:2.5%;width:56%;height:8%;font-size:clamp(1.15rem,5.2vw,2rem)}
   .quiz-topline{position:absolute;inset:0;display:block}

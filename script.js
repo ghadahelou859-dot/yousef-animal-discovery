@@ -33,7 +33,7 @@ const answerFallback={Duck:'🦆',Two:'2️⃣',Three:'3️⃣',Five:'5️⃣',F
 function showScreen(id){screens.forEach(screen=>screen.classList.toggle('active',screen.id===id));window.scrollTo(0,0)}
 function stopAllAudio(){[lessonAudio,questionAudio,animalAudio].forEach(audio=>{audio.pause();audio.currentTime=0});if('speechSynthesis' in window)window.speechSynthesis.cancel()}
 function shuffle(items){return [...items].sort(()=>Math.random()-.5)}
-function showMap(){stopTimer();stopAllAudio();welcomeVideo.pause();showScreen('mapScreen')}
+function showMap(){stopTimer();stopAllAudio();welcomeVideo.pause();showScreen('mapScreen');positionMapTargets()}
 
 document.getElementById('startBtn').addEventListener('click',()=>{
   showScreen('videoScreen');
@@ -43,6 +43,7 @@ document.getElementById('startBtn').addEventListener('click',()=>{
 welcomeVideo.addEventListener('ended',showMap);
 welcomeVideo.addEventListener('error',showMap);
 document.querySelectorAll('.map-node[data-lesson]').forEach(button=>button.addEventListener('click',()=>openLesson(Number(button.dataset.lesson))));
+document.querySelector('.map-bear').addEventListener('click',()=>openLesson(0));
 document.querySelectorAll('.go-map').forEach(button=>button.addEventListener('click',showMap));
 
 function openLesson(index){
@@ -149,9 +150,10 @@ document.querySelectorAll('#ratingButtons button').forEach(button=>button.addEve
 // Match the clickable circles to the artwork, including when object-fit crops the map.
 function positionMapTargets(){
   const frame=document.getElementById('mapScreen');
+  if(!frame.clientWidth||!frame.clientHeight)return;
   const portrait=window.matchMedia('(max-width:700px)').matches;
-  const art=portrait?{width:941,height:1672,circles:[[590,1010,100],[800,915,96],[535,776,92],[750,669,92],[638,523,92],[828,394,92]],bear:[375,1210,155]}:
-    {width:1672,height:941,circles:[[951,747,95],[1275,718,96],[1077,563,88],[1256,490,88],[1378,372,88],[1492,219,88]],bear:[700,710,145]};
+  const art=portrait?{width:941,height:1672,circles:[[590,1010,100],[800,915,96],[535,776,92],[750,669,92],[638,523,92],[828,394,92]],bear:[330,1180,210]}:
+    {width:1672,height:941,circles:[[951,747,95],[1275,718,96],[1077,563,88],[1256,490,88],[1378,372,88],[1492,219,88]],bear:[630,615,210]};
   const scale=Math.max(frame.clientWidth/art.width,frame.clientHeight/art.height);
   const offsetX=(frame.clientWidth-art.width*scale)/2;
   const offsetY=(frame.clientHeight-art.height*scale)/2;
@@ -161,7 +163,7 @@ function positionMapTargets(){
     button.style.top=`${offsetY+(y-r)*scale}px`;
     button.style.width=`${2*r*scale}px`;
   });
-  const bear=frame.querySelector('.map-polar-bear');
+  const bear=frame.querySelector('.map-bear');
   bear.style.left=`${offsetX+art.bear[0]*scale}px`;
   bear.style.top=`${offsetY+art.bear[1]*scale}px`;
   bear.style.width=`${art.bear[2]*scale}px`;
