@@ -159,10 +159,16 @@ function showResult(){
     }
   }
   showScreen('resultScreen');
+  if(window.GhadaAnalytics){
+    GhadaAnalytics.track('quiz_complete',{pageKey:'result',metadata:{score,total:10,celebration:score>=8}});
+  }
 }
 document.querySelectorAll('#ratingButtons button').forEach(button=>button.addEventListener('click',()=>{
   const rating=Number(button.dataset.rating);localStorage.setItem('animalLessonRating',String(rating));
   document.querySelectorAll('#ratingButtons button').forEach((star,i)=>star.classList.toggle('selected',i<rating));
+  if(window.GhadaAnalytics){
+    GhadaAnalytics.track('rating',{pageKey:'result',metadata:{rating}});
+  }
 }));
 
 // Match the clickable circles to the artwork, including when object-fit crops the map.
